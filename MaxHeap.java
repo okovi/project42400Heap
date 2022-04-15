@@ -7,14 +7,16 @@ public final class MaxHeap<Integer> {
     private boolean initialized=false; 
     private static final int DEFAULT_CAPACITY=25; 
     private static final int MAX_CAPACITY=10000; 
-
+    
     /*--------------Methods to be implemented for Project 4------------*/
+    public MaxHeap<Integer> succCreateHeap(File input){ 
+        return MaxHeap(input);
+    }
     /**
      * 
      * @param inputTextFile
      */
     private MaxHeap(File inputTextFile) { //using add method repeatedly
-        boolean done=false;
         Integer[] parsedInput=new Comparable[100];
         parsedInput=parseFile(inputTextFile);                 
         int numOfSwaps=0; 
