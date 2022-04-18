@@ -85,6 +85,7 @@ public final class MaxHeap {
             return parsed;
         }catch (FileNotFoundException e) { 
             System.out.print(" error happened while parsing");
+            //gives me errors without returning some kind of array
             int[] error= {-1,-1};
             return error;
 
@@ -92,16 +93,24 @@ public final class MaxHeap {
         
         
     }
-    public void writeHeapFile(File toWriteIn) throws IOException { 
+    public void writeAddHeapFile(File toWriteIn) throws IOException { 
         
             FileWriter writer=new FileWriter(toWriteIn);
-            writer.write("First ten integers of heap:\n");
+            writer.write("First ten integers of heap: using seccessive adds\n");
             for (int i=1;i<=10;i++) { 
                 writer.write(""+heap[i]+'\n');
             }
             writer.write("number of swaps:");
-            writer.write(numOfSwaps);
-            writer.write("\n Now after ten removals:");
+            writer.write(""+numOfSwaps);
+            writer.write("\nNow after ten removals:\n");
+            // call to remove 
+            for (int i=0; i<=9;i++)
+                this.removeMax();
+            //write next 10 
+            for (int i=1;i<=10;i++)  
+                writer.write(""+heap[i]+'\n');
+            
+            
 
 
         

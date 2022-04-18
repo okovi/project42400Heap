@@ -1,4 +1,4 @@
-First ten integers of heap:
+First ten integers of heap: using seccessive adds
 997
 991
 982
@@ -9,5 +9,15 @@ First ten integers of heap:
 931
 874
 953
-number of swaps:q
- Now after ten removals:
+number of swaps:113
+Now after ten removals:
+924
+904
+913
+874
+882
+843
+880
+814
+872
+865
