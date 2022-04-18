@@ -1,0 +1,13 @@
+First ten integers of heap:
+997
+991
+982
+960
+982
+913
+972
+931
+874
+953
+number of swaps:q
+ Now after ten removals:
