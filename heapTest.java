@@ -31,11 +31,11 @@ public class heapTest{
             writer.close();
             String fileName = "data_random.txt";
             int[] parsed = parseFile(fileName);
-            MaxHeap sortedHeap = new MaxHeap(parsed, true); 
+            MaxHeap sortedHeap = new MaxHeap(parsed, false); 
             sortedHeap.writeAddHeapFile(new File ("data_heaped.txt"));
             fileName = "data_sorted.txt";
             parsed = parseFile(fileName);
-            sortedHeap = new MaxHeap(parsed, true); 
+            sortedHeap = new MaxHeap(parsed, false); 
             sortedHeap.writeAddHeapFile(new File ("data_heaped.txt"));
             
         } catch (IOException e) {

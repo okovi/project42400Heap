@@ -25,7 +25,20 @@ public final class MaxHeap implements MaxHeapInterface {
      */
     /*--------------Methods to be implemented for Project 4------------*/
     protected MaxHeap(int[] entries, boolean sequential) throws IOException{ //using add method repeatedly
-        if (sequential) {
+        this(entries.length); // Call other constructor
+        if (!sequential) {
+            lastIndex = entries.length;
+            // Assertion: integrityOK = true
+
+            // Copy given array to data field
+            for (int index = 0; index < entries.length; index++)
+               heap[index + 1] = entries[index];
+
+            // Create heap
+            for (int rootIndex = lastIndex / 2; rootIndex > 0; rootIndex--)
+               reheap(rootIndex);
+        }
+        else {
             heap = new int[101];           
             numOfSwaps=0; 
             heap[1]=entries[0];
@@ -35,9 +48,7 @@ public final class MaxHeap implements MaxHeapInterface {
                 add(entries[i]);
             }
         }
-        else {
-            
-        }
+        
     }
     /**
      * 
@@ -175,6 +186,7 @@ public final class MaxHeap implements MaxHeapInterface {
                 heap[rootIndex]=heap[largerChildIndex];                                                     // set up for top of while
                 rootIndex=largerChildIndex;
                 leftChildIndex=2*rootIndex;                 
+                numOfSwaps++; //keeps track of how many swaps          ///////////////////////////////////////////////////////////////////////////
             }
             else                                                                                            //break out of loop
                 done=true;  
