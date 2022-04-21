@@ -3,6 +3,7 @@ public  interface MaxHeapInterface{
     /**
      * 
      * @param newEntry
+     * 
      */
     public void add ( int newEntry) ; 
     /**

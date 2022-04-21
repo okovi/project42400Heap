@@ -6,6 +6,11 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class heapTest{ 
+    /**
+     * @param fileName
+     * @return
+     * @throws java.io.IOException
+     */
     static public int[] parseFile(String fileName) throws IOException {
         try { 
             Scanner fReader = new Scanner(new File(fileName));
@@ -14,7 +19,7 @@ public class heapTest{
             while(fReader.hasNextInt()) {
                 parsed[i]=fReader.nextInt();
                 i++;
-            }  
+            }
             fReader.close();
             return parsed;
         }catch (FileNotFoundException e) { 
@@ -31,13 +36,18 @@ public class heapTest{
             writer.close();
             String fileName = "data_random.txt";
             int[] parsed = parseFile(fileName);
-            MaxHeap sortedHeap = new MaxHeap(parsed, false); 
-            sortedHeap.writeAddHeapFile(new File ("data_heaped.txt"));
+            MaxHeap sequentialHeap = new MaxHeap(parsed, true); 
+            sequentialHeap.writeAddHeapFile(new File ("data_heaped.txt"), true);
+            MaxHeap optimalHeap = new MaxHeap(parsed, false); 
+            optimalHeap.writeAddHeapFile(new File ("data_heaped.txt"), false);
             fileName = "data_sorted.txt";
             parsed = parseFile(fileName);
-            sortedHeap = new MaxHeap(parsed, false); 
-            sortedHeap.writeAddHeapFile(new File ("data_heaped.txt"));
-            
+            sequentialHeap = new MaxHeap(parsed, true); 
+            sequentialHeap.writeAddHeapFile(new File ("data_heaped.txt"), true);
+            optimalHeap = new MaxHeap(parsed, false); 
+            optimalHeap.writeAddHeapFile(new File ("data_heaped.txt"), false);
+
+
         } catch (IOException e) {
             System.out.print("ioexception");
         }

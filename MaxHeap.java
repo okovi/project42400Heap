@@ -20,8 +20,9 @@ public final class MaxHeap implements MaxHeapInterface {
    // }
     
     /**
-     * 
-     * @param inputTextFile
+     * @param entries
+     * @param sequential
+     * @throws java.io.IOException
      */
     /*--------------Methods to be implemented for Project 4------------*/
     protected MaxHeap(int[] entries, boolean sequential) throws IOException{ //using add method repeatedly
@@ -68,24 +69,49 @@ public final class MaxHeap implements MaxHeapInterface {
         return elem;
     }
     
-    
-    public void writeAddHeapFile(File toWriteIn) throws IOException { 
-        
+    /**
+     * 
+     * @param toWriteIn
+     * @param isSequential
+     * @throws java.io.IOException
+     * 
+     */
+    public void writeAddHeapFile(File toWriteIn, boolean isSequential) throws IOException { 
+        	
             FileWriter writer=new FileWriter(toWriteIn, true);
-            writer.write("First ten integers of heap: using seccessive adds\n");
-            for (int i=1;i<=10;i++) { 
-                writer.write(""+heap[i]+'\n');
+            if(isSequential) {
+            	writer.write("=======================================================================================\n"); 
+                writer.write("Heap built using sequential insertions: ");
+    		    for (int i=1;i<=10;i++) 
+    		    	writer.write(""+heap[i]+",");		
+    	    	writer.write("...\n");
+                writer.write("Number of swaps in the heap creation: " + numOfSwaps);
+                writer.write("\n"); 
+                for (int i=0; i<10;i++)
+                    this.removeMax();
+                writer.write("Heap after 10 removals: ");
+                for (int i=1;i<=10;i++) 
+    		    	writer.write(""+heap[i]+",");	
+    	    	writer.write("...\n");
             }
-            writer.write("number of swaps:");
-            writer.write(""+numOfSwaps);
-            writer.write("\nNow after ten removals:\n");
-            // call to remove 
-            for (int i=0; i<10;i++)
-                this.removeMax();
-            //write next 10 
-            for (int i=1;i<=10;i++)  
-                writer.write(""+heap[i]+'\n');
+            else {
+            	  writer.write("\n");
+                  writer.write("Heap built using optimal insertions: ");
+      		    for (int i=1;i<=10;i++) 
+      		    	writer.write(""+heap[i]+",");		
+      	    	writer.write("...\n");
+                  writer.write("Number of swaps in the heap creation: " + numOfSwaps);
+                  writer.write("\n"); 
+                  for (int i=0; i<10;i++)
+                      this.removeMax();
+                  writer.write("Heap after 10 removals: ");
+                  for (int i=1;i<=10;i++) 
+      		    	writer.write(""+heap[i]+",");		
+      	    	writer.write("...\n");
+                  writer.write("=======================================================================================\n");
+            }
             writer.close();
+         
     }
     
     /*--------------Functional methods to do project--------------------*/
@@ -122,6 +148,7 @@ public final class MaxHeap implements MaxHeapInterface {
      * 
      * @param newEntry
      */
+    @Override
     public void add ( int newEntry)  {
         checkInitalization();
         int newIndex=lastIndex+1;
@@ -147,6 +174,7 @@ public final class MaxHeap implements MaxHeapInterface {
      * 
      * @return
      */
+    @Override
     public int getMax()
    {
 	checkInitalization();
@@ -155,6 +183,11 @@ public final class MaxHeap implements MaxHeapInterface {
             root = heap[1];
       return root;
    } // end getMax
+    /**
+     * 
+     * @return
+     */
+    @Override
     public int removeMax (){
         checkInitalization();
         int root = -1; // only positive numbers, so if it returns negative then it isnt working correctly
@@ -198,6 +231,7 @@ public final class MaxHeap implements MaxHeapInterface {
      * 
      * @return
      */
+    @Override
     public boolean isEmpty(){
         return lastIndex<1; 
     }
@@ -205,12 +239,14 @@ public final class MaxHeap implements MaxHeapInterface {
      * 
      * @return
      */
+    @Override
     public int getSize(){
         return lastIndex;
     }
     /**
      * 
      */
+    @Override
     public void clear(){
         checkInitalization();
         while (lastIndex>-1) { 
