@@ -25,36 +25,19 @@ public final class MaxHeap implements MaxHeapInterface {
      */
     /*--------------Methods to be implemented for Project 4------------*/
     protected MaxHeap(int[] entries, boolean sequential) throws IOException{ //using add method repeatedly
-        heap = new int[100];           
-        numOfSwaps=0; 
-        heap[1]=entries[0];
-        lastIndex++;
-        initialized=true;
-        for (int i=1; i<entries.length-1; i++) {
-            add(entries[i]);
-        }
-        
-        /*
-        for (int i=1;i<entries.length-1;i++) 
-        {
-            
-            int newIndex=lastIndex+1;
-            int parentIndex=newIndex/2; 
-            while ((parentIndex>0) && (entries[i].toString()>heap[parentIndex].toString()))
-            {
-                heap[newIndex]=heap[parentIndex]; //move parent down
-                newIndex=parentIndex; // get next possible posotion
-                parentIndex=newIndex/2; //continue loop
-                numOfSwaps++; //keeps track of how many swaps
+        if (sequential) {
+            heap = new int[101];           
+            numOfSwaps=0; 
+            heap[1]=entries[0];
+            lastIndex++;
+            initialized=true;
+            for (int i=1; i<entries.length; i++) {
+                add(entries[i]);
             }
-            heap[newIndex]=parsedInput[i];
-            lastIndex++; 
         }
-        checkCapcity(parsedInput.length);
-        checkInitalization();
-        */
-        
-        
+        else {
+            
+        }
     }
     /**
      * 
@@ -73,36 +56,11 @@ public final class MaxHeap implements MaxHeapInterface {
         }
         return elem;
     }
-    /**
-     * 
-     * @param toBeParsed
-     * @return
-     */
-    public int[] parseFile(File toBeParsed)  {
-        try { 
-            Scanner reader=new Scanner(toBeParsed);
-            int[] parsed=new int[100];
-            int i=0;
-            while (reader.hasNextInt())  {
-                parsed[i]=reader.nextInt();
-                i++;
-            }
-                
-            reader.close();
-            return parsed;
-        }catch (FileNotFoundException e) { 
-            System.out.print(" error happened while parsing");
-            //gives me errors without returning some kind of array
-            int[] error= {-1,-1};
-            return error;
-
-        }
-        
-        
-    }
+    
+    
     public void writeAddHeapFile(File toWriteIn) throws IOException { 
         
-            FileWriter writer=new FileWriter(toWriteIn);
+            FileWriter writer=new FileWriter(toWriteIn, true);
             writer.write("First ten integers of heap: using seccessive adds\n");
             for (int i=1;i<=10;i++) { 
                 writer.write(""+heap[i]+'\n');
@@ -116,11 +74,6 @@ public final class MaxHeap implements MaxHeapInterface {
             //write next 10 
             for (int i=1;i<=10;i++)  
                 writer.write(""+heap[i]+'\n');
-            
-            
-
-
-        
             writer.close();
     }
     
@@ -167,6 +120,7 @@ public final class MaxHeap implements MaxHeapInterface {
             heap[newIndex]=heap[parentIndex]; //move parent down
             newIndex=parentIndex; // get next possible posotion
             parentIndex=newIndex/2; //continue loop
+            numOfSwaps++; //keeps track of how many swaps          ///////////////////////////////////////////////////////////////////////////
         }
         heap[newIndex]=newEntry;
         lastIndex++; 

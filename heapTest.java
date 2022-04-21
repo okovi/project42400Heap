@@ -1,13 +1,14 @@
 package project42400heap;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException; 
 import java.util.Scanner;
 
 public class heapTest{ 
-    static public int[] parseFile() throws IOException {
+    static public int[] parseFile(String fileName) throws IOException {
         try { 
-            Scanner fReader = new Scanner(new File("data_random.txt"));
+            Scanner fReader = new Scanner(new File(fileName));
             int[] parsed=new int[100];
             int i=0;
             while(fReader.hasNextInt()) {
@@ -26,9 +27,16 @@ public class heapTest{
     }
     public static void main(String[] args) { 
         try { 
-            int[] parsed = parseFile();
+            FileWriter writer=new FileWriter("data_heaped.txt");
+            writer.close();
+            String fileName = "data_random.txt";
+            int[] parsed = parseFile(fileName);
             MaxHeap sortedHeap = new MaxHeap(parsed, true); 
-            sortedHeap.writeAddHeapFile(new File ("data_sorted.txt"));
+            sortedHeap.writeAddHeapFile(new File ("data_heaped.txt"));
+            fileName = "data_sorted.txt";
+            parsed = parseFile(fileName);
+            sortedHeap = new MaxHeap(parsed, true); 
+            sortedHeap.writeAddHeapFile(new File ("data_heaped.txt"));
             
         } catch (IOException e) {
             System.out.print("ioexception");
