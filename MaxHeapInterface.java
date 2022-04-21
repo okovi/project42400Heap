@@ -1,19 +1,20 @@
-public  interface MsxHeapInterface <T extends Comparable < ? super T >>{
+package project42400heap;
+public  interface MaxHeapInterface{
     /**
      * 
      * @param newEntry
      */
-    public void add ( T newEntry) ; 
+    public void add ( int newEntry) ; 
     /**
      * 
      * @return
      */
-    public T removeMax ();
+    public int removeMax ();
     /**
      * 
      * @return
      */
-    public T getMax();
+    public int getMax();
     /**
      * 
      * @return
