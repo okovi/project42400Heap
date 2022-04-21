@@ -1,41 +1,46 @@
+package project42400heap;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public final class MaxHeap { 
+public final class MaxHeap implements MaxHeapInterface { 
 
-    private int[] heap=new int[100]; 
+    private int[] heap;
     private int lastIndex; 
     private boolean initialized=false; 
     private static final int DEFAULT_CAPACITY=25; 
     private static final int MAX_CAPACITY=10000; 
     private int numOfSwaps;
     
-    /*--------------Methods to be implemented for Project 4------------*/
-    public static MaxHeap succCreateHeap(File input) throws IOException{ 
-        return new MaxHeap(input,1);
-    }
+    
+   // public  MaxHeap seqCreateHeap(T[] entries) throws IOException{ 
+   //     return new MaxHeap(entries,true);
+   // }
     
     /**
      * 
      * @param inputTextFile
      */
-    protected MaxHeap(File inputTextFile, int successive) throws IOException{ //using add method repeatedly
-        int[] parsedInput=new int[100];
-        parsedInput=parseFile(inputTextFile);                 
+    /*--------------Methods to be implemented for Project 4------------*/
+    protected MaxHeap(int[] entries, boolean sequential) throws IOException{ //using add method repeatedly
+        heap = new int[100];           
         numOfSwaps=0; 
-
-        heap[1]=parsedInput[0];
+        heap[1]=entries[0];
         lastIndex++;
         initialized=true;
-        for (int i=1;i<parsedInput.length-1;i++) 
+        for (int i=1; i<entries.length-1; i++) {
+            add(entries[i]);
+        }
+        
+        /*
+        for (int i=1;i<entries.length-1;i++) 
         {
             
             int newIndex=lastIndex+1;
             int parentIndex=newIndex/2; 
-            while ((parentIndex>0) && (parsedInput[i]>heap[parentIndex]))
+            while ((parentIndex>0) && (entries[i].toString()>heap[parentIndex].toString()))
             {
                 heap[newIndex]=heap[parentIndex]; //move parent down
                 newIndex=parentIndex; // get next possible posotion
@@ -47,6 +52,8 @@ public final class MaxHeap {
         }
         checkCapcity(parsedInput.length);
         checkInitalization();
+        */
+        
         
     }
     /**
@@ -56,7 +63,7 @@ public final class MaxHeap {
      */
     protected int remove(int elemIndex){ 
         checkInitalization();
-        int elem =-1;
+        int elem=-1;
         if (!isEmpty())
         {
             elem=heap[elemIndex];                                                                                   //get copy of max
@@ -104,7 +111,7 @@ public final class MaxHeap {
             writer.write(""+numOfSwaps);
             writer.write("\nNow after ten removals:\n");
             // call to remove 
-            for (int i=0; i<=9;i++)
+            for (int i=0; i<10;i++)
                 this.removeMax();
             //write next 10 
             for (int i=1;i<=10;i++)  
@@ -142,7 +149,7 @@ public final class MaxHeap {
             initialCapacity=DEFAULT_CAPACITY;
         else
             checkCapcity(initialCapacity);
-        int[] tempHeap=new int[initialCapacity+1];
+        int[] tempHeap = new int[initialCapacity + 1];
         heap=tempHeap;
         lastIndex=0;
         initialized=true;
@@ -155,7 +162,7 @@ public final class MaxHeap {
         checkInitalization();
         int newIndex=lastIndex+1;
         int parentIndex=newIndex/2; //int div takes care of floor fxn 
-        while ((parentIndex>0) && (newEntry> heap[parentIndex]))
+        while ((parentIndex > 0) && newEntry > heap[parentIndex])
         {
             heap[newIndex]=heap[parentIndex]; //move parent down
             newIndex=parentIndex; // get next possible posotion
@@ -175,9 +182,17 @@ public final class MaxHeap {
      * 
      * @return
      */
+    public int getMax()
+   {
+	checkInitalization();
+        int root = -1;
+        if (!isEmpty())
+            root = heap[1];
+      return root;
+   } // end getMax
     public int removeMax (){
         checkInitalization();
-        int root =-1; // only positive numbers, so if it returns negative then it isnt working correctly
+        int root = -1; // only positive numbers, so if it returns negative then it isnt working correctly
         if (!isEmpty())
         {
             root=heap[1];                                                                                   //get copy of max
@@ -199,9 +214,9 @@ public final class MaxHeap {
         {
             int largerChildIndex=leftChildIndex;                                                            //assume left-child is larger
             int rightChildIndex=leftChildIndex+1;
-            if ((rightChildIndex<=lastIndex)&& heap[rightChildIndex]> heap[largerChildIndex])   // check for + get larger child
+            if ((rightChildIndex<=lastIndex) && (heap[rightChildIndex] > heap[largerChildIndex]))   // check for + get larger child
                 largerChildIndex=rightChildIndex;
-            if (orphan< heap[largerChildIndex])                                                 // compare to child-max, swap if current is smaller + continue loop
+            if (orphan < heap[largerChildIndex])                                                 // compare to child-max, swap if current is smaller + continue loop
             {
                 heap[rootIndex]=heap[largerChildIndex];                                                     // set up for top of while
                 rootIndex=largerChildIndex;
@@ -212,14 +227,7 @@ public final class MaxHeap {
         }
         heap[rootIndex]=orphan;                                                                             //insert orphan back into appropriate place 
     }
-    /**
-     * 
-     * @return
-     */
-    public int getMax(){
-        checkInitalization();
-        return (int)heap[1];
-    }
+
     /**
      * 
      * @return
